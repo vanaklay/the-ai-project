@@ -5,6 +5,7 @@ export interface Workflow {
   description: string;
   category: string;
   duration: string;
+  difficulty: "Beginner" | "Intermediate" | "Advanced";
   sections: {
     overview: {
       content: string;
@@ -37,7 +38,7 @@ export interface Workflow {
   };
 }
 
-export const workflows: Workflow[] = [
+const WORKFLOWS: Workflow[] = [
   {
     id: "notebooklm-to-web",
     slug: "notebooklm-to-web",
@@ -46,6 +47,7 @@ export const workflows: Workflow[] = [
       "Convert NotebookLM notes into a clean, tabbed web experience with reusable prompts and predictable structure.",
     category: "Data",
     duration: "2-3 hours",
+    difficulty: "Intermediate",
     sections: {
       overview: {
         content:
@@ -226,6 +228,7 @@ Content:
       "Turn a single idea into a multi-format script pack: hooks, outlines, and shareable segments with consistent structure.",
     category: "Creative",
     duration: "1-2 hours",
+    difficulty: "Beginner",
     sections: {
       overview: {
         content:
@@ -385,7 +388,11 @@ Constraints:
       },
     },
   },
-].sort((a, b) => a.title.localeCompare(b.title));
+];
+
+export const workflows = [...WORKFLOWS].sort((a, b) =>
+  a.title.localeCompare(b.title),
+);
 
 export function getAllWorkflowSlugs() {
   return workflows.map((w) => ({ slug: w.slug }));
@@ -394,4 +401,3 @@ export function getAllWorkflowSlugs() {
 export function getWorkflowBySlug(slug: string): Workflow | null {
   return workflows.find((w) => w.slug === slug) ?? null;
 }
-

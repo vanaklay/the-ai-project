@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useMemo, useState } from "react";
 import { Menu, X } from "lucide-react";
-import { accentByCategory, lucideIconByName } from "@/src/lib/workflowTheme";
+import { LUCIDE_ICONS, accentByCategory } from "@/src/lib/workflowTheme";
 import { workflows } from "@/src/data/workflows";
 
 function getActiveSlug(pathname: string) {
@@ -92,7 +92,7 @@ export default function Sidebar() {
                       ? "Terminal"
                       : "Workflow";
 
-              const Icon = lucideIconByName(iconName);
+              const Icon = LUCIDE_ICONS[iconName] ?? LUCIDE_ICONS.Sparkles;
 
               return (
                 <li key={wf.slug}>

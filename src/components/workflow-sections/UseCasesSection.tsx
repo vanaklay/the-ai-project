@@ -1,5 +1,5 @@
 import type { Workflow } from "@/src/data/workflows";
-import { accentByCategory, lucideIconByName } from "@/src/lib/workflowTheme";
+import { LUCIDE_ICONS, accentByCategory } from "@/src/lib/workflowTheme";
 import { Card } from "@/src/components/ui/card";
 
 export default function UseCasesSection({
@@ -24,7 +24,7 @@ export default function UseCasesSection({
 
       <div className="grid gap-4 sm:grid-cols-2">
         {useCases.map((uc) => {
-          const Icon = lucideIconByName(uc.icon);
+          const Icon = LUCIDE_ICONS[uc.icon] ?? LUCIDE_ICONS.Sparkles;
           return (
             <Card
               key={uc.title}

@@ -13,6 +13,20 @@ import {
   type LucideIcon as LucideIconType,
 } from "lucide-react";
 
+export const LUCIDE_ICONS: Record<string, LucideIconType> = {
+  Wand2,
+  NotebookPen,
+  Monitor,
+  Globe,
+  Terminal,
+  Database,
+  ShieldCheck,
+  Rocket,
+  Workflow,
+  FileCode2,
+  Sparkles,
+};
+
 // Small set of pre-defined Tailwind class strings so Tailwind can
 // statically detect them during build.
 export function accentByCategory(category: string) {
@@ -66,31 +80,6 @@ export function accentByCategory(category: string) {
 }
 
 export function lucideIconByName(name: string): LucideIconType {
-  switch (name) {
-    case "Wand2":
-      return Wand2;
-    case "NotebookPen":
-      return NotebookPen;
-    case "Monitor":
-      return Monitor;
-    case "Globe":
-      return Globe;
-    case "Terminal":
-      return Terminal;
-    case "Database":
-      return Database;
-    case "ShieldCheck":
-      return ShieldCheck;
-    case "Rocket":
-      return Rocket;
-    case "Workflow":
-      return Workflow;
-    case "FileCode2":
-      return FileCode2;
-    case "Sparkles":
-      return Sparkles;
-    default:
-      return Sparkles;
-  }
+  return LUCIDE_ICONS[name] ?? Sparkles;
 }
 
