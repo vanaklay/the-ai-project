@@ -5,9 +5,10 @@ Branch: `feat/workflow-directory`
 
 ## Summary
 - Implemented a documentation-style workflow directory with:
-  - Fixed left sidebar (responsive with mobile hamburger)
-  - Landing page at `/` listing workflows
-  - Dynamic workflow pages at `/workflows/[slug]` (pre-rendered via `generateStaticParams`)
+  - Docs sidebar as an on-demand drawer (mobile + desktop “Open workflow sidebar”)
+  - Marketing landing page at `/` (high-conversion)
+  - Docs workflow pages at `/workflows/[slug]` (pre-rendered via `generateStaticParams`)
+  - `/workflows` index listing page (docs experience)
   - Tabbed internal navigation with Framer Motion transitions
   - Prompt library with copy-to-clipboard feedback
   - Premium dark UI styling (glass/neon accents per category)
@@ -26,25 +27,36 @@ Branch: `feat/workflow-directory`
 ## Styling / layout changes
 - Enforced premium dark background (`#050505`) and glass borders globally.
 - Ensured Tailwind scans both `app/` and `src/` via `@source` directives (Tailwind v4 style).
-- Added a global layout with fixed sidebar and scrollable main content area.
+- Root layout is minimal (no sidebar). Sidebar is scoped to the docs route group via `app/(docs)/layout.tsx`.
+- Prevented global horizontal overflow on docs pages (mobile <900px case).
 
 ## Routing / SSG
-- Added `/workflows/[slug]` dynamic route.
+- Added docs route-group dynamic route: `app/(docs)/workflows/[slug]/page.tsx`.
+- Added docs index route: `app/(docs)/workflows/page.tsx` (`/workflows`).
 - Implemented `generateStaticParams()` using the local workflow dataset for SSG.
 
 ## Data model
 - Added `src/data/workflows.ts` as the local “database”
-  - `Workflow` interface matching the PRD
-  - `workflows: Workflow[]` with 2 fully-filled example workflows
+  - `Workflow` interface extended with fields used by the UI (e.g. `difficulty`, `tools`, `result`, and `titleParts`)
+  - `workflows: Workflow[]` with fully-filled example workflows
   - Helpers:
     - `getAllWorkflowSlugs()`
     - `getWorkflowBySlug(slug)`
 
 ## Components added (major)
 - **App shell**
-  - `src/components/app/Sidebar.tsx`
+- `src/components/app/Sidebar.tsx` (docs sidebar drawer on-demand)
+- **Marketing site (`/`)**
+  - `src/components/marketing/Navbar.tsx`
+  - `src/components/marketing/Hero.tsx`
+  - `src/components/marketing/Section.tsx`
+  - `src/components/marketing/WorkflowCard.tsx`
+  - `src/components/marketing/Footer.tsx`
 - **Workflow page**
   - `src/components/workflow/WorkflowPageClient.tsx` (tabs + animated transitions)
+- **Workflow overview refactor**
+  - `src/components/workflow-sections/OverviewSection.tsx` now contains the header + “WORKFLOW SNAPSHOT” + “IMPORTANT TO KNOW”
+  - `src/components/workflow/WorkflowSnapshotStepCard.tsx` (extracted step card UI)
 - **Workflow sections**
   - `src/components/workflow-sections/OverviewSection.tsx`
   - `src/components/workflow-sections/UseCasesSection.tsx`
@@ -72,22 +84,47 @@ Utility:
 ### Updated
 - `app/layout.tsx`
 - `app/globals.css`
-- `app/page.tsx`
 
 ### Added
-- `app/workflows/[slug]/page.tsx`
+- `app/(docs)/workflows/[slug]/page.tsx`
+- `app/(docs)/workflows/page.tsx`
+- `app/(docs)/layout.tsx`
+- `app/(marketing)/page.tsx`
+- `app/(marketing)/about/page.tsx`
+- `app/(marketing)/contact/page.tsx`
 - `src/data/workflows.ts`
 - `src/components/app/Sidebar.tsx`
 - `src/components/workflow/WorkflowPageClient.tsx`
 - `src/components/workflow/PromptCard.tsx`
+- `src/components/workflow/WorkflowSnapshotStepCard.tsx`
 - `src/components/workflow-sections/OverviewSection.tsx`
 - `src/components/workflow-sections/UseCasesSection.tsx`
 - `src/components/workflow-sections/SetupSection.tsx`
 - `src/components/workflow-sections/PromptsSection.tsx`
 - `src/components/workflow-sections/DeploymentSection.tsx`
+- `src/components/marketing/Navbar.tsx`
+- `src/components/marketing/Hero.tsx`
+- `src/components/marketing/Section.tsx`
+- `src/components/marketing/WorkflowCard.tsx`
+- `src/components/marketing/Footer.tsx`
 - `src/components/ui/card.tsx`
 - `src/components/ui/accordion.tsx`
 - `src/components/ui/tabs.tsx`
 - `src/lib/utils.ts`
 - `src/lib/workflowTheme.ts`
+
+## Follow-up updates (after the initial log)
+- Split routes with route groups:
+  - `app/(marketing)/*`: marketing landing site at `/` (plus `about` + `contact`)
+  - `app/(docs)/*`: docs/workflows experience with sidebar drawer (opened only via “Open workflow sidebar”)
+- Sidebar visibility:
+  - Sidebar is not always visible anymore; it opens on-demand (desktop + mobile) and closes via overlay.
+  - Docs layout removes permanent left spacing and disables global horizontal overflow.
+- Routing:
+  - Added `/workflows` index at `app/(docs)/workflows/page.tsx`
+  - Workflow pages moved to `app/(docs)/workflows/[slug]/page.tsx` and still use `generateStaticParams()`
+- Workflow UI refactor:
+  - Snapshot header (“WORKFLOW SNAPSHOT”), step cards strip, and “IMPORTANT TO KNOW” now live inside `src/components/workflow-sections/OverviewSection.tsx`
+  - `src/components/workflow/WorkflowPageClient.tsx` no longer renders that snapshot block
+  - Extracted step-card UI into `src/components/workflow/WorkflowSnapshotStepCard.tsx`
 
