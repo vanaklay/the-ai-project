@@ -2,6 +2,10 @@ export interface Workflow {
   id: string;
   slug: string;
   title: string;
+  titleParts: {
+    head: string;
+    tail: string;
+  };
   description: string;
   category: string;
   duration: string;
@@ -44,6 +48,10 @@ const notebookLmToWebsite: Workflow = {
   id: "1",
   slug: "notebooklm-to-website",
   title: "NotebookLM → Site Web",
+  titleParts: {
+    head: "NotebookLM",
+    tail: " → Site Web",
+  },
   description:
     "Transform any knowledge base into a live website in under 20 minutes using NotebookLM, Gemini Canvas, and Netlify — without writing code.",
   category: "Content Automation",
@@ -227,6 +235,10 @@ const voiceToQuoteApp: Workflow = {
   id: "2",
   slug: "voice-to-quote-app",
   title: "Voice → AI Quote Generator",
+  titleParts: {
+    head: "Voice",
+    tail: " → AI Quote Generator",
+  },
   description:
     "Build a voice-controlled app that generates professional quotes (PDF) in real time using AI, Cursor, and deployment tools.",
   category: "AI App Builder",
@@ -414,6 +426,10 @@ const ideaToWorkflowSystem: Workflow = {
   id: "3",
   slug: "idea-to-ai-workflow",
   title: "Idea → AI Workflow System",
+  titleParts: {
+    head: "Idea",
+    tail: " → AI Workflow System",
+  },
   description:
     "Turn any idea, transcript, or use case into a structured, reusable AI workflow using LLMs and a standardized framework.",
   category: "AI Meta Systems",

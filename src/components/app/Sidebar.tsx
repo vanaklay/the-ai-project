@@ -1,11 +1,11 @@
 "use client";
 
+import { workflows } from "@/src/data/workflows";
+import { LUCIDE_ICONS, accentByPage } from "@/src/lib/workflowTheme";
+import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useMemo, useState } from "react";
-import { Menu, X } from "lucide-react";
-import { LUCIDE_ICONS, accentByCategory } from "@/src/lib/workflowTheme";
-import { workflows } from "@/src/data/workflows";
 
 function getActiveSlug(pathname: string) {
   if (pathname.startsWith("/workflows/")) {
@@ -26,7 +26,7 @@ export default function Sidebar() {
     <>
       <button
         type="button"
-        className="sm:hidden fixed z-50 top-4 left-4 rounded-xl border border-white/10 bg-white/5 backdrop-blur px-3 py-2 text-zinc-200 hover:bg-white/10"
+        className="fixed z-50 top-4 left-6 sm:left-4 rounded-xl border border-white/10 bg-white/5 backdrop-blur px-3 py-2 text-zinc-200 hover:bg-white/10"
         onClick={() => setOpen(true)}
         aria-label="Open workflow sidebar"
       >
@@ -35,7 +35,7 @@ export default function Sidebar() {
 
       {open && (
         <div
-          className="fixed inset-0 z-40 bg-black/60 sm:hidden"
+          className="fixed inset-0 z-40 bg-black/60"
           onClick={() => setOpen(false)}
         />
       )}
@@ -44,7 +44,6 @@ export default function Sidebar() {
         className={[
           "fixed z-50 left-0 top-0 h-screen w-72 border-r border-white/10 bg-[#050505]/80 backdrop-blur transition-transform duration-200 ease-out overflow-y-auto",
           open ? "translate-x-0" : "-translate-x-full",
-          "sm:translate-x-0",
         ].join(" ")}
       >
         <div className="relative px-4 py-4">
@@ -66,7 +65,7 @@ export default function Sidebar() {
 
           <button
             type="button"
-            className="sm:hidden absolute top-4 right-4 rounded-xl border border-white/10 bg-white/5 backdrop-blur px-2 py-2 text-zinc-200 hover:bg-white/10"
+            className="absolute top-4 right-4 rounded-xl border border-white/10 bg-white/5 backdrop-blur px-2 py-2 text-zinc-200 hover:bg-white/10"
             onClick={() => setOpen(false)}
             aria-label="Close sidebar"
           >
@@ -80,7 +79,7 @@ export default function Sidebar() {
           </div>
           <ul className="space-y-1">
             {workflows.map((wf) => {
-              const accent = accentByCategory(wf.category);
+              const accent = accentByPage();
               const isActive = wf.slug === activeSlug;
 
               const iconName =
@@ -109,8 +108,19 @@ export default function Sidebar() {
                         : "text-zinc-200",
                     ].join(" ")}
                   >
-                    <Icon size={16} className={isActive ? accent.text : "text-zinc-300"} />
-                    <span className="text-sm font-medium truncate">
+                    <Icon
+                      size={16}
+                      className={[
+                        isActive ? accent.text : "text-zinc-300",
+                      ].join(" ")}
+                    />
+                    <span
+                      className={[
+                        "text-sm font-medium truncate",
+                        isActive ? accent.text : "text-zinc-300",
+                      ].join(" ")}
+                      onClick={() => setOpen(false)}
+                    >
                       {wf.title}
                     </span>
                   </Link>
@@ -123,4 +133,3 @@ export default function Sidebar() {
     </>
   );
 }
-
