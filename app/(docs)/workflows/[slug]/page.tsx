@@ -6,12 +6,13 @@ export function generateStaticParams() {
   return getAllWorkflowSlugs();
 }
 
-export default function WorkflowPage({
+export default async function WorkflowPage({
   params,
 }: Readonly<{
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }>) {
-  const workflow = getWorkflowBySlug(params.slug);
+  const { slug } = await params;
+  const workflow = getWorkflowBySlug(slug);
 
   if (!workflow) {
     notFound();
