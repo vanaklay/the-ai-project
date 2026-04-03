@@ -7,7 +7,7 @@ import SetupSection from "@/src/components/workflow-sections/SetupSection";
 import UseCasesSection from "@/src/components/workflow-sections/UseCasesSection";
 import type { Workflow } from "@/src/data/workflows";
 import { accentByCategory } from "@/src/lib/workflowTheme";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, MotionConfig, motion } from "framer-motion";
 import { useMemo, useState } from "react";
 
 type TabKey = "overview" | "useCases" | "setup" | "prompts" | "deployment";
@@ -60,51 +60,89 @@ export default function WorkflowPageClient({
           </div>
 
           <div className="p-4 sm:p-6">
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.div
-                key={activeTab}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.2 }}
-              >
+            <MotionConfig reducedMotion="never">
+              <AnimatePresence mode="wait" initial={false}>
                 {activeTab === "overview" && (
-                  <OverviewSection
-                    overview={workflow.sections.overview}
-                    category={workflow.category}
-                    titleParts={workflow.titleParts}
-                    description={workflow.description}
-                    tools={workflow.tools}
-                    duration={workflow.duration}
-                    setup={workflow.sections.setup}
-                  />
+                  <motion.div
+                    key="overview"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    <OverviewSection
+                      overview={workflow.sections.overview}
+                      category={workflow.category}
+                      titleParts={workflow.titleParts}
+                      description={workflow.description}
+                      tools={workflow.tools}
+                      duration={workflow.duration}
+                      setup={workflow.sections.setup}
+                    />
+                  </motion.div>
                 )}
+
                 {activeTab === "useCases" && (
-                  <UseCasesSection
-                    useCases={workflow.sections.useCases}
-                    category={workflow.category}
-                  />
+                  <motion.div
+                    key="useCases"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    <UseCasesSection
+                      useCases={workflow.sections.useCases}
+                      category={workflow.category}
+                    />
+                  </motion.div>
                 )}
+
                 {activeTab === "setup" && (
-                  <SetupSection
-                    steps={workflow.sections.setup}
-                    category={workflow.category}
-                  />
+                  <motion.div
+                    key="setup"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    <SetupSection
+                      steps={workflow.sections.setup}
+                      category={workflow.category}
+                    />
+                  </motion.div>
                 )}
+
                 {activeTab === "prompts" && (
-                  <PromptsSection
-                    prompts={workflow.sections.prompts}
-                    category={workflow.category}
-                  />
+                  <motion.div
+                    key="prompts"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    <PromptsSection
+                      prompts={workflow.sections.prompts}
+                      category={workflow.category}
+                    />
+                  </motion.div>
                 )}
+
                 {activeTab === "deployment" && (
-                  <DeploymentSection
-                    methods={workflow.sections.deployment.methods}
-                    category={workflow.category}
-                  />
+                  <motion.div
+                    key="deployment"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    <DeploymentSection
+                      methods={workflow.sections.deployment.methods}
+                      category={workflow.category}
+                    />
+                  </motion.div>
                 )}
-              </motion.div>
-            </AnimatePresence>
+              </AnimatePresence>
+            </MotionConfig>
           </div>
         </section>
       </div>

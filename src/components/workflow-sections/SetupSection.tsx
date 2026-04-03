@@ -1,11 +1,11 @@
-import type { Workflow } from "@/src/data/workflows";
-import { accentByCategory } from "@/src/lib/workflowTheme";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/src/components/ui/accordion";
+import type { Workflow } from "@/src/data/workflows";
+import { accentByCategory } from "@/src/lib/workflowTheme";
 
 export default function SetupSection({
   steps,
@@ -50,7 +50,7 @@ export default function SetupSection({
             </AccordionTrigger>
             <AccordionContent>
               <div className="space-y-3">
-                <ul className="space-y-1">
+                <ul className="space-y-1 pt-3">
                   {s.content.map((action) => (
                     <li key={action} className="text-sm text-zinc-300">
                       <span className="text-zinc-500">• </span>
@@ -72,4 +72,3 @@ export default function SetupSection({
     </div>
   );
 }
-

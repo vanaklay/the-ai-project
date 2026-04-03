@@ -117,9 +117,11 @@ export default function OverviewSection({
             {overview.idealFor.map((item) => (
               <li
                 key={item}
-                className="flex items-start justify-start gap-2 text-sm text-zinc-200"
+                className="flex items-center justify-start gap-2 text-sm text-zinc-200"
               >
-                <CheckCircle2 size={16} className="text-green-400" />
+                <CheckCircle2
+                  className="h-4 w-4 flex-none text-green-400"
+                />
                 <span className="leading-relaxed">{item}</span>
               </li>
             ))}
@@ -140,9 +142,11 @@ export default function OverviewSection({
             {overview.notSuitedFor.map((item) => (
               <li
                 key={item}
-                className="flex items-start justify-start gap-2 text-sm text-zinc-200"
+                className="flex items-center justify-start gap-2 text-sm text-zinc-200"
               >
-                <XCircle size={16} className="text-rose-400" />
+                <XCircle
+                  className="h-4 w-4 flex-none text-rose-400"
+                />
                 <span className="leading-relaxed">{item}</span>
               </li>
             ))}
