@@ -4,9 +4,12 @@ import Hero from "@/src/components/marketing/Hero";
 import Section from "@/src/components/marketing/Section";
 import Footer from "@/src/components/marketing/Footer";
 import WorkflowCard from "@/src/components/marketing/WorkflowCard";
-import { workflows } from "@/src/data/workflows";
+import { getAllWorkflows } from "@/src/data/workflows";
 
-export default function MarketingHomePage() {
+export const revalidate = 60;
+
+export default async function MarketingHomePage() {
+  const workflows = await getAllWorkflows();
   const preview = workflows.slice(0, 3);
 
   return (

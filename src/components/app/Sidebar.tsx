@@ -1,6 +1,6 @@
 "use client";
 
-import { workflows } from "@/src/data/workflows";
+import type { Workflow } from "@/src/data/workflows";
 import { LUCIDE_ICONS, accentByPage } from "@/src/lib/workflowTheme";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
@@ -14,7 +14,7 @@ function getActiveSlug(pathname: string) {
   return null;
 }
 
-export default function Sidebar() {
+export default function Sidebar({ workflows }: { workflows: Workflow[] }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 

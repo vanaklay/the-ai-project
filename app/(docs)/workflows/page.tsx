@@ -1,12 +1,16 @@
 import Link from "next/link";
-import { workflows } from "@/src/data/workflows";
+import { getAllWorkflows } from "@/src/data/workflows";
 import { LUCIDE_ICONS, accentByCategory } from "@/src/lib/workflowTheme";
+
+export const revalidate = 60;
 
 export const metadata = {
   title: "Workflows",
 };
 
-export default function WorkflowsIndexPage() {
+export default async function WorkflowsIndexPage() {
+  const workflows = await getAllWorkflows();
+
   return (
     <div className="max-w-6xl mx-auto">
       <header className="mb-6">
@@ -94,4 +98,3 @@ export default function WorkflowsIndexPage() {
     </div>
   );
 }
-
