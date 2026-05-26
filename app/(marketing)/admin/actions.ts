@@ -1,9 +1,11 @@
 "use server";
 
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { supabase } from "@/src/lib/supabase";
 import type { Workflow } from "@/src/data/workflows";
+import { isValidAdminCookie } from "@/src/lib/adminAuth";
 
 export type ActionState = { error: string } | null;
 
@@ -11,6 +13,10 @@ export async function createWorkflow(
   _prev: ActionState,
   formData: FormData
 ): Promise<ActionState> {
+  const cookieStore = await cookies();
+  if (!(await isValidAdminCookie(cookieStore.get("admin_session")?.value))) {
+    return { error: "Non autorisé." };
+  }
   const id = (formData.get("id") as string).trim();
   const slug = (formData.get("slug") as string).trim();
   const title = (formData.get("title") as string).trim();

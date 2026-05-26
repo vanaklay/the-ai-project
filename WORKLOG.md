@@ -113,6 +113,31 @@ Utility:
 - `src/lib/utils.ts`
 - `src/lib/workflowTheme.ts`
 
+## Update — 2026-05-26
+
+### Admin auth (route protection)
+- Restricted `/admin` to a single password stored in `ADMIN_SECRET` env var
+- No new dependencies — uses Web Crypto API (`crypto.subtle`) for HMAC-SHA256 token derivation (required by Next.js Edge Runtime)
+
+#### Files added
+- `src/lib/adminAuth.ts` — shared helper: `deriveToken(secret)` + `isValidAdminCookie(cookieValue)`
+- `middleware.ts` (root) — redirects `/admin/*` to `/admin/login` if `admin_session` cookie is absent or invalid
+- `app/(marketing)/admin/login/page.tsx` — minimal login form (dark UI, consistent with existing style)
+- `app/(marketing)/admin/login/action.ts` — server action: verifies password, sets HTTP-only cookie (30-day expiry), redirects to `/admin`
+
+#### Files modified
+- `app/(marketing)/admin/actions.ts` — added auth guard at top of `createWorkflow` (double protection beyond middleware)
+- `.env.local` — added `ADMIN_SECRET`
+- `.env.example` — documented `ADMIN_SECRET`
+- `DEPLOYMENT.md` — added `ADMIN_SECRET` to env vars table and updated verification checklist
+
+### Tooling
+- `MASTER_PROMPT.md` updated twice:
+  - First pass: added missing `titleParts` field, restricted Lucide icons to registered set, added import line, documented category accent values
+  - Second pass: changed output format from TypeScript file to labeled fields + JSON block, aligned exactly with `/admin` form inputs
+
+---
+
 ## Follow-up updates (after the initial log)
 - Split routes with route groups:
   - `app/(marketing)/*`: marketing landing site at `/` (plus `about` + `contact`)

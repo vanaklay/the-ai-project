@@ -22,9 +22,11 @@
 |---|---|---|
 | `NEXT_PUBLIC_SUPABASE_URL` | Supabase > Settings > API > Project URL | ✅ Oui (safe) |
 | `SUPABASE_SERVICE_ROLE_KEY` | Supabase > Settings > API > `service_role` | ❌ Non (secret) |
+| `ADMIN_SECRET` | Génère avec `openssl rand -hex 32` | ❌ Non (secret) |
 
 > ⚠️ `SUPABASE_SERVICE_ROLE_KEY` donne un accès total à ta base. Ne la mets jamais dans
 > une variable préfixée `NEXT_PUBLIC_` et ne la commite jamais.
+> ⚠️ `ADMIN_SECRET` protège la route `/admin`. Utilise une valeur longue et aléatoire.
 
 ---
 
@@ -45,8 +47,9 @@ Dans la page d'import Vercel, section **"Environment Variables"** :
 |---|---|---|
 | `NEXT_PUBLIC_SUPABASE_URL` | `https://xxxx.supabase.co` | Production, Preview, Development |
 | `SUPABASE_SERVICE_ROLE_KEY` | `eyJ...` | Production, Preview, Development |
+| `ADMIN_SECRET` | valeur générée avec `openssl rand -hex 32` | Production uniquement |
 
-> Ces valeurs sont à copier depuis **Supabase > Settings > API**.
+> Les deux premières valeurs sont à copier depuis **Supabase > Settings > API**.
 
 ### Étape 3 — Déployer
 
@@ -120,7 +123,7 @@ Si tu modifies des variables d'env dans Vercel après le premier déploiement :
 - [ ] `https://ton-domaine.com` charge la page marketing
 - [ ] `https://ton-domaine.com/workflows` affiche tous les workflows
 - [ ] `https://ton-domaine.com/workflows/<slug>` affiche un workflow complet avec tous ses onglets
-- [ ] `https://ton-domaine.com/admin` affiche le formulaire de création
+- [ ] `https://ton-domaine.com/admin` redirige vers `/admin/login` (non connecté) puis donne accès après le bon mot de passe
 - [ ] Créer un workflow via `/admin` → redirection vers le nouveau workflow ✅
 - [ ] Headers de sécurité présents :
   ```bash
