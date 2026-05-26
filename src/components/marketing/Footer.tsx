@@ -15,14 +15,20 @@ export default function Footer() {
           </div>
 
           <div className="flex items-center gap-5 text-sm text-zinc-300">
+            <Link href="/" className="hover:text-zinc-100">
+              Home
+            </Link>
             <Link href="/workflows" className="hover:text-zinc-100">
               Workflows
             </Link>
-            <Link href="#" className="hover:text-zinc-100">
+            <Link href="https://x.com/vanaklay" className="hover:text-zinc-100">
               Twitter
             </Link>
-            <Link href="#" className="hover:text-zinc-100">
+            <Link href="https://github.com/vanaklay/" className="hover:text-zinc-100">
               GitHub
+            </Link>
+            <Link href="https://www.linkedin.com/in/vanaklay/" className="hover:text-zinc-100">
+              Linkedin
             </Link>
           </div>
         </div>

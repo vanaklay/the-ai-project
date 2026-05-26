@@ -35,6 +35,7 @@ export default function OverviewSection({
         </p>
         <h1 className="mt-3 text-3xl sm:text-4xl font-semibold tracking-tight">
           <span className={titleAccent.title}>{titleParts.head}</span>
+          {" "}
           <span>{titleParts.tail}</span>
         </h1>
         <p className="mt-3 text-zinc-300 leading-relaxed max-w-2xl mx-auto">
